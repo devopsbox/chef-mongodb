@@ -100,6 +100,20 @@ The result is a new system service with
   /etc/init.d/my_instance <start|stop|restart|status>
 ```
 
+## MongoDB instance with EBS attached RAID and PIOPS
+
+You should include the following recipes:
+
+```ruby
+include_recipe "mongodb::10gen_repo"
+include_recipe "mongodb::replicaset"
+include_recipe "mongodb::raid_data"
+```
+
+Optionally set the attributes mongodb[:vols], mongodb[:volsize], mongodb[:piops], mongodb[:use_piops]
+to determine whether to use regular EBS or PIOPS, and the number and size of EBS volumes to
+provision and RAID together.
+
 ## Replicasets
 
 Add `mongodb::replicaset` to the node's run_list. Also choose a name for your
