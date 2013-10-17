@@ -14,6 +14,7 @@ recipe "mongodb::replicaset", "Installs and configures a mongodb replicaset"
 
 depends "apt", ">= 1.8.2"
 depends "yum"
+depends "aws"
 
 %w{ ubuntu debian freebsd centos redhat fedora amazon scientific}.each do |os|
   supports os
@@ -64,11 +65,11 @@ attribute "mongodb/replicaset_name",
 attribute "mongodb/enable_rest",
   :display_name => "Enable Rest",
   :description => "Enable the ReST interface of the webserver"
-  
+
 attribute "mongodb/smallfiles",
   :display_name => "Use small files",
   :description => "Modify MongoDB to use a smaller default data file size"
-  
+
 attribute "mongodb/bind_ip",
   :display_name => "Bind address",
   :description => "MongoDB instance bind address",
