@@ -61,6 +61,20 @@ default[:mongodb][:init_dir] = "/etc/init.d"
 
 default[:mongodb][:init_script_template] = "mongodb.init.erb"
 
+
+# EC2 configs
+default[:mongodb][:use_piops] = true
+default[:mongodb][:piops]     = 1000
+default[:mongodb][:volsize]   = 1000
+default[:mongodb][:vols]      = 2
+# set blockdev read ahead to something sane
+default[:mongodb][:setra]     = 512
+
+# AWS credentials
+default[:mongodb][:aws_access_key_id]     = ""
+default[:mongodb][:aws_secret_access_key] = ""
+
+
 case node['platform_family']
 when "freebsd"
   default[:mongodb][:defaults_dir] = "/etc/rc.conf.d"

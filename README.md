@@ -47,6 +47,15 @@ For examples see the USAGE section below.
 * `mongodb[:replica_votes]` - Number of [votes](http://docs.mongodb.org/manual/reference/replica-configuration/#local.system.replset.members[n].votes) node will cast in an election.
 * `mongodb[:package_version]` - Version of the MongoDB package to install, default is nil
 
+## EC2
+* `mongodb[:aws_access_key_id]` - AWS credentials
+* `mongodb[:aws_secret_access_key]` - AWS credentials
+* `mongodb[:use_piops]` - whether to provision piops or regular EBS
+* `mongodb[:piops]` - number of provisioned IOPS to allocate per volume
+* `mongodb[:volsize]` - size of EBS volumes to provision, in GB
+* `mongodb[:vols]` - number of volumes to provision and RAID together
+
+
 # USAGE:
 
 ## 10gen repository
@@ -64,7 +73,7 @@ Simply add
 ```ruby
 include_recipe "mongodb::default"
 ```
-  
+
 to your recipe. This will run the mongodb instance as configured by your distribution.
 You can change the dbpath, logpath and port settings (see ATTRIBUTES) for this node by
 using the `mongodb_instance` definition:
@@ -84,7 +93,7 @@ mongodb_instance "my_instance" do
   dbpath "/data/"
 end
 ```
-  
+
 The result is a new system service with
 
 ```shell
@@ -129,7 +138,7 @@ attribute `mongodb[:sharded_collections]`:
   }
 }
 ```
-  
+
 Now mongos will automatically enable sharding for the "test" and the "mydatabase"
 database. Also the "addressbook" and the "calendar" collection will be sharded,
 with sharding key "name" resp. "date".
@@ -140,7 +149,7 @@ This is esp. important when you want to replicate shards.
 
 ## Sharding + Replication
 
-The setup is not much different to the one described above. All you have to do is adding the 
+The setup is not much different to the one described above. All you have to do is adding the
 `mongodb::replicaset` recipe to all shard nodes, and make sure that all shard
 nodes which should be in the same replicaset have the same shard name.
 
