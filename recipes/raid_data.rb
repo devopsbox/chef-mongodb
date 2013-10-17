@@ -39,3 +39,21 @@ script "add_array_to_mdadm" do
   not_if "grep ^ARRAY /etc/mdadm/mdadm.conf"
 end
 
+script "config-disks" do
+  interpreter "bash"
+  user "root"
+  code <<-EOH
+    mkdir -p #{node['mongodb']['dbpath']}
+    mkdir -p #{node['mongodb']['logpath']}
+
+    if which mdadm; then
+      vol=$(grep #{node['mongodb']['dbpath'] } /proc/mounts |awk '{print $1}')
+      disks=$(mdadm --detail $vol |grep active |awk '{print $7}')
+    fi
+
+    for n in $vol $disks ; do
+      blockdev --setra #{ node['mongodb']['setra']} $n
+    done
+
+  EOH
+end
