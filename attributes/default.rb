@@ -58,7 +58,6 @@ default[:mongodb][:ulimit][:memory_size] = "unlimited"
 default[:mongodb][:ulimit][:processes] = 32000
 
 default[:mongodb][:init_dir] = "/etc/init.d"
-
 default[:mongodb][:init_script_template] = "mongodb.init.erb"
 
 
@@ -73,6 +72,10 @@ default[:mongodb][:setra]     = 512
 # AWS credentials
 default[:mongodb][:aws_access_key_id]     = ""
 default[:mongodb][:aws_secret_access_key] = ""
+
+# Backups
+default[:mongodb][:backup_host]   = nil
+default[:backups][:mongo_volumes] = []
 
 
 case node['platform_family']
